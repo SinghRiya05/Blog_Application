@@ -120,15 +120,23 @@ export const deleteblog=asyncHandler(
   }
 )
 
-export const admindashboard=()=>asyncHandler(
-async(req,res)=>{
-  const totalBlogs=await Blog.countDocuments();
-  const totalUsers=await User.countDocuments();
-  console.log(totalBlogs);
-  
-  res.status(200).json(
-    new ApiResponse(200,{totalBlogs,totalUsers},"fetched successfully")
-  )
-}
-)
+export const admindashboard = asyncHandler(async (req, res) => {
+  try {
+    const totalBlogs = await Blog.countDocuments();
+    const totalUsers = await User.countDocuments();
+
+    console.log("Total Blogs:", totalBlogs);
+    console.log("Total Users:", totalUsers);
+
+    res.status(200).json(
+      new ApiResponse(200, { totalBlogs, totalUsers }, "Fetched successfully")
+    );
+  } catch (error) {
+    console.error("Error fetching admin dashboard data:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
 

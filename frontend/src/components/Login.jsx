@@ -35,9 +35,9 @@ export default function Login() {
 
        
         if (role === "admin") {
-          window.location.href = "/admin";;
+          navigate("/admin");
         } else if (role === "user") {
-           window.location.href = "/user";
+           navigate("/user");
         } else {
           setErrorMsg("Unknown user role.");
         }

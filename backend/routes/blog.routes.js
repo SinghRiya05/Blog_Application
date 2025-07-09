@@ -21,7 +21,7 @@ router.route("/AllUserBlog")
 .get(verifyToken,getAllblogsUser)
 
 router.route("/admin")
-.get(verifyToken,isAdmin,admindashboard)
+.get(admindashboard)
 
 router.route("/:id")
 .get(
