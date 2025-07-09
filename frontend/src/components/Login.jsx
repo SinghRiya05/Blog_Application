@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios/';
-import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 import Navbar from './Navbar';
+import {toast} from "react-toastify"
 
-export default function Login() {
+export default function Login({setRole}) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,36 +17,40 @@ export default function Login() {
       const res = await axios.post('/user/login', { email, password },
          { withCredentials: true } 
       )
-  console.log(res.data.data);
   
-      
-      const token = res.data.data.token;
-
-     
+    const token = res.data.data.token;
 
       if (token) {
         
         localStorage.setItem("token", token);
         
         const decoded = jwtDecode(token);
-        const role = decoded.role;
+         const role = decoded.role;
         console.log(role);
-        
+        setRole(role)
 
-       
         if (role === "admin") {
           navigate("/admin");
         } else if (role === "user") {
+          console.log("riya");
+          
            navigate("/user");
+           console.log("singh");
+           
         } else {
           setErrorMsg("Unknown user role.");
         }
       } else {
         setErrorMsg("No token received.");
       }
+      toast.success("User Logged in successfully")
     } catch (error) {
-      console.error("Login error:", error);
+      console.log(error);
+      
       setErrorMsg(error.response?.data?.message || "Login failed");
+      console.log(errorMsg);
+      
+      toast.error(errorMsg)
     }
   };
 
@@ -54,7 +58,7 @@ export default function Login() {
     <div>
     <Navbar/>
     <div className='flex justify-center items-center mt-16'>
-      <div className='border-2 border-black px-10 py-8 rounded-lg shadow-md w-full max-w-md'>
+      <div className='border-2 border-black px-10 py-8 rounded-lg shadow-md w-full max-w-md hover:scale-105 transition-all duration-700 hover:shadow-md hover:bg-gray-100'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
         {errorMsg && <p className="text-red-500 mb-4 text-center">{errorMsg}</p>}
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>

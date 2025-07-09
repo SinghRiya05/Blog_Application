@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import deleteicon from "../../assets/bin_icon.svg"
+
 export default function UserBloglist() {
+const navigate=useNavigate()
+
   const [blogs, setBlogs] = useState([]);
    const handleDelete=async(id)=>{
     try {
@@ -39,6 +43,7 @@ export default function UserBloglist() {
             <th className='border px-4 py-2'>Date</th>
             <th className='border px-4 py-2'>Status</th>
             <th className='border px-4 py-2'>Delete</th>
+            <th className='border px-4 py-2'>Update</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +53,7 @@ export default function UserBloglist() {
               <td className='border px-4 py-2'>{new Date(blog.createdAt).toLocaleDateString()}</td>
               <td className='border px-4 py-2'>{blog.status || 'Published'}</td>
               <td className='border px-4 py-2 '><button onClick={()=>handleDelete(blog._id)} className='cursor-pointer'><img  src={deleteicon} width={20} alt="" /></button></td>
+              <td className='border px-4 py-2 '><button onClick={()=>navigate(`/user/editBlog/${blog._id}`)} className='cursor-pointer text-blue-800 underline hover:text-blue-400'>Edit Blog</button></td>
             </tr>
           ))}
         </tbody>

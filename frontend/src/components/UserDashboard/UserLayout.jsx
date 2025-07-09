@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { toast } from 'react-toastify';
 import logo from "../../assets/blog-logo.svg";
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './UserSidebar';
@@ -8,7 +9,8 @@ export default function UserLayout() {
 const navigate=useNavigate()
 const logout=()=>{
   localStorage.removeItem("token")
-    window.location.href = "/login"; 
+toast.success("User logged out successfully")
+   navigate("/") 
 }
 
   return (

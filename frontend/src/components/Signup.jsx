@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "../api/axios";
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from "./Footer"
 export default function Signup() {
     const navigate=useNavigate();
   const [email, setEmail] = useState('');
@@ -11,19 +14,22 @@ export default function Signup() {
     e.preventDefault();
     console.log('Signup form submitted:', { email, password ,username});
     try {
-        await axios.post('/user/register', { email, password },{withCredentials:true}) 
+     const res= await axios.post('/user/register', { username,email, password },{withCredentials:true}) 
+       toast.success("User Registered")
         navigate("/user")
     } catch (error) {
-        console.log(error.message);
         
+        toast.error(error.response?.data?.message)
     }
   };
 
   return (
-    <div className='flex justify-center items-center mt-16'>
-      <div className='border-2 border-black px-10 py-8 rounded-lg shadow-md w-full max-w-md'>
+    <>
+    <Navbar/>
+    <div className='flex justify-center items-center mt-16 mb-10'>
+      <div className='border-2 border-black px-10 py-8 rounded-lg shadow-md w-full max-w-md  hover:scale-105 transition-all duration-700 hover:shadow-md hover:bg-gray-100'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Sign Up</h2>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+        <form  className='flex flex-col gap-4'>
           <div>
             <label htmlFor="email" className='block text-sm font-medium mb-1'>Email</label>
             <input
@@ -60,14 +66,17 @@ export default function Signup() {
           </div>
 
           <button
-            type="submit"
-            className='bg-[#352f44] text-white py-2 rounded hover:bg-[#2e293d] transition duration-300'
+            onClick={handleSubmit}
+            className='bg-[#352f44] text-white py-2 rounded hover:scale-105 transition duration-300 mt-2'
           >
             Signup
           </button>
-          
+          <p className='text-lg italic'> Back to 
+            <button className='font-bold underline cursor-pointer ml-2 ' onClick={()=>navigate("/login")}><span  >Login</span></button></p>
         </form>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }

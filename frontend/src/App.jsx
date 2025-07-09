@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Homepage from "./components/Home/Homepage";
-
-
 import Layout from "./components/Dashboard/Layout";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AddBlog from "./components/Dashboard/AddBlog";
 import Bloglist from "./components/Dashboard/Bloglist";
 import Comment from "./components/Dashboard/Comment";
-
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import UserLayout from "./components/UserDashboard/UserLayout";
@@ -16,9 +16,10 @@ import UserDashboard from "./components/UserDashboard/UserDashboard";
 import UserAddBlog from "./components/UserDashboard/UserAddBlog";
 import UserBloglist from "./components/UserDashboard/UserBloglist";
 import UserComment from "./components/UserDashboard/UserComment";
-
 import { jwtDecode } from "jwt-decode";
 import Blog from "./components/Blog/Blog";
+import EditBlog from "./components/Dashboard/other/EditBlog";
+import UserEditBlog from "./components/UserDashboard/UserEditBlog";
 
 function App() {
   const [role, setRole] = useState(null);
@@ -45,6 +46,7 @@ function App() {
   }
 
   return (
+    <>
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/blog/:id" element={<Blog />} />
@@ -60,6 +62,7 @@ function App() {
         <Route path="addBlog" element={<AddBlog />} />
         <Route path="listBlog" element={<Bloglist />} />
         <Route path="comments" element={<Comment />} />
+         <Route path="/admin/editBlog/:id" element={<EditBlog/>} />
       </Route>
 
       {/* User Routes */}
@@ -73,11 +76,18 @@ function App() {
         <Route path="addBlog" element={<UserAddBlog />} />
         <Route path="listBlog" element={<UserBloglist />} />
         <Route path="comments" element={<UserComment />} />
+        <Route path="/user/editBlog/:id" element={<UserEditBlog />} />
+
       </Route>
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login setRole={setRole}/>} />
       <Route path="/signup" element={<Signup />} />
+     
     </Routes>
+
+          <ToastContainer position="top-center" autoClose={2000} />
+
+    </>
   );
 }
 

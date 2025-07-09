@@ -55,17 +55,17 @@ e.preventDefault()
 
 
   return data? (
-    <div className='mt-5 relative'>
-      <div className='text-center mt-20 leading-[2.5rem]'>
+    <div className='mt-2 relative'>
+      <div className='text-center mt-10 leading-[2.5rem]'>
         <p className='text-[#352f44] text-lg fo'>Published on {Moment(data.createdAt).format("MMMM D YYYY")}</p>
         <h2 className='text-2xl sm:text-4xl md:text-5xl lg:text-5xl mt-2.5 font-semibold max-w-2xl mx-auto'>{data.title}</h2>
         <p className='text-gray-600 max-w-lg my-5 mx-auto'>{data.subTitle}</p>
-        <p className='inline-block py-0.8 px-4 rounded-full border border-[#352f44] bg-gray-100 font-medium mb-2' > {data.author?.username}</p>
+        <p className='inline-block py-0.8 px-4 rounded-full border border-[#352f44] bg-gray-100 font-medium mb-2' >Author : {data.author?.username}</p>
       </div>
 
-      <div className='mx-5 max-w-5xl md:mx-auto my-10 mt-6'>
-<div className='text-center '><img src={data.image} alt="" className='rounded-3xl mb-5 w-full ' /></div>
-<div dangerouslySetInnerHTML={{__html:data.description}} className='rich-text max-w-3xl mx-auto'></div>
+      <div className='mx-5 max-w-5xl md:mx-auto my-10 mt-6 '>
+<div className='flex justify-center'><img src={data.image} alt="" className='rounded-3xl mb-5 w-[30rem]' /></div>
+<div dangerouslySetInnerHTML={{__html:data.description}} className='rich-text max-w-3xl mx-auto mt-3'></div>
   {/*Comments Section*/}
 <div className='mt-14 mb-10 max-w-3xl mx-auto'>
   <p className="text-xl font-semibold my-6">Comments ({comments.length})</p>
