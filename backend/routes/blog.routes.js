@@ -4,7 +4,7 @@ import { admindashboard, createBlog, deleteblog, getAllblogs, getAllblogsAdmin, 
 import { isAdmin } from "../middlewares/role.middleware.js";
 
  
-    import { verifyToken } from "../middlewares/auth.middleware.js";
+import { verifyToken } from "../middlewares/auth.middleware.js";
 const router=Router();
 
 router.route("/")
@@ -17,8 +17,7 @@ router.route("/")
 router.route("/AllBlog")
 .get(getAllblogs)
 
-router.route("/AllUserBlog")
-.get(verifyToken,getAllblogsUser)
+router.route("/AllUserBlog").get(verifyToken,getAllblogsUser)
 
 router.route("/admin")
 .get(verifyToken,isAdmin,admindashboard)
