@@ -47,7 +47,7 @@ export const createBlog = asyncHandler(async (req, res) => {
 });
 
 export const getAllblogsAdmin = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).sort({createdAt:-1});
   if (!blogs) {
     throw ApiError(404, "Blogs not found");
   }

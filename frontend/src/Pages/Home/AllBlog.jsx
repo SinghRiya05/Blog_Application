@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { blogCategories } from "../../assets/assets";
 import BlogCard from "./BlogCard";
-
+import Loader from "../../components/Loader"
 import axios from "../../api/axios";
 
 export default function AllBlog() {
   const [blogs, setBlogs] = useState([]);
   const [selected, setSelected] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading,setLoading]=useState(true)
   const blogsPerPage = 6;
 
   // Filter blogs based on selected category
@@ -27,18 +28,25 @@ export default function AllBlog() {
     setCurrentPage(1);
   }, [selected]);
 
-  useEffect(() => {
-    axios
-      .get("/blog/AllBlog")
-      .then((res) => {
+ useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get("/blog/AllBlog");
         setBlogs(res.data.data);
-      })
-      .catch((err) => {
-        console.error(" Error fetching blogs:", err.message);
-      });
-  });
+      } catch (err) {
+        console.error("Error fetching blogs:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return (
+    fetchBlogs();
+  }, []);
+
+   if (loading) return <Loader />;
+
+  return  (
     <div>
       {/* Category Buttons */}
       <div className="flex justify-center gap-4 sm:gap-8 my-10 flex-wrap">
@@ -95,6 +103,6 @@ export default function AllBlog() {
           </button>
         </div>
       )}
-    </div>
-  );
+    </div> 
+  )
 }
