@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from "../../api/axios"
 
+
 export default function AddBlog() {
  const [image,setImage]=useState(null);
  const [title,setTitle]=useState("");
@@ -58,6 +59,7 @@ try {
         type="text"
         value={title}
         onChange={(e)=>setTitle(e.target.value)}
+        required
         placeholder="Enter blog title"
         className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
