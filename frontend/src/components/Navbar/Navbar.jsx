@@ -33,6 +33,14 @@ const handleClick=()=>{
     }
 }
 
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
   return (
     <div className=" p-5 sm:p-3">
       <div className="flex justify-between items-center sm:mx-4 lg:mx-16 ">
@@ -48,7 +56,7 @@ const handleClick=()=>{
             className="flex items-center gap-2 px-5 py-3 border-none text-white rounded-xl lg:text-base sm:text-sm cursor-pointer"
             style={{ backgroundColor: '#352f44' }}
           >
-           {role?"Dashboard" :"Signup or Login"}
+           {role?`${toTitleCase(role)} Dashboard` :"Signup or Login"}
             <img src={arrow} alt="arrow" width={20} />
           </button>
         </div>

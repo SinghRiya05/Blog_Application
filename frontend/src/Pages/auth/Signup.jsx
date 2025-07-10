@@ -16,7 +16,7 @@ export default function Signup() {
     try {
      const res= await axios.post('/user/register', { username,email, password },{withCredentials:true}) 
        toast.success("User Registered")
-        navigate("/user")
+        navigate("/login")
     } catch (error) {
         
         toast.error(error.response?.data?.message)
