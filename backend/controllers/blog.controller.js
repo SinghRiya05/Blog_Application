@@ -55,6 +55,7 @@ export const getAllblogsAdmin = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(200, blogs, "All blogs fetched success fully"));
 });
+
 export const getAllblogsUser = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
@@ -67,6 +68,7 @@ export const getAllblogsUser = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(200, blogs, "All blogs fetched success fully"));
 });
+
 export const getAllblogs = asyncHandler(async (req, res) => {
   const blogs = await Blog.find({ isPublished: true }).sort({ createdAt: -1 });
   if (!blogs || blogs.length === 0) {
@@ -206,10 +208,9 @@ export const updateBlogAdmin = asyncHandler(async (req, res) => {
 export const getUserBlogCount = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   console.log(userId);
-  
 
   const totalBlogs = await Blog.countDocuments({ author: userId });
-  
+
   res.status(200).json(new ApiResponse(200, totalBlogs, "blog fetched"));
 });
 
@@ -220,8 +221,8 @@ export const getdraftUserBlog = asyncHandler(async (req, res) => {
     isPublished: false,
   });
 
-  if(draftBlogs===null){
-    return res.status(200).json(new ApiResponse(200, 0 , "blog fetched"));
+  if (draftBlogs === null) {
+    return res.status(200).json(new ApiResponse(200, 0, "blog fetched"));
   }
-  res.status(200).json(new ApiResponse(200, draftBlogs , "blog fetched"));
+  res.status(200).json(new ApiResponse(200, draftBlogs, "blog fetched"));
 });
