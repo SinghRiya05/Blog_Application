@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../api/axios';
-import deleteicon from "../../assets/bin_icon.svg"
+import axios from '../../../api/axios';
+import deleteicon from "../../../assets/bin_icon.svg"
 
 export default function UserBloglist() {
 const navigate=useNavigate()

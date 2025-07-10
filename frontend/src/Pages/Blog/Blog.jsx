@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import BlogPage from "./BlogPage";
-import Footer from "../Footer";
+import Footer from "../../components/Footer/Footer";
 export default function Blog() {
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       <BlogPage />
       <Footer />
     </div>

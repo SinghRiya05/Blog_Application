@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../api/axios";
-import deleteicon from "../../assets/bin_icon.svg";
+import axios from "../../../api/axios";
+import deleteicon from "../../../assets/bin_icon.svg";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify"
 
 export default function Bloglist() {
   const [blogs, setBlogs] = useState([]);
@@ -10,9 +11,10 @@ export default function Bloglist() {
   const handleDelete = async (id) => {
     try {
       const res = axios.delete(`/blog/${id}`);
-      alert((await res).data.message);
+      toast.success("Blog is deletd")
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
     } catch (error) {
+       toast.success("Blog deltetion failed")
       console.log(error.message);
     }
   };

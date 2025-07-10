@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../../assets/blog-logo.svg";
+import logo from "../../../assets/blog-logo.svg";
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 

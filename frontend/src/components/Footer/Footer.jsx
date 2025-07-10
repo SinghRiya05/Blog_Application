@@ -1,6 +1,6 @@
 import React from 'react'
-import logo from '../assets/blog-logo.svg'
-import { footer_data } from '../assets/assets'
+import logo from '../../assets/blog-logo.svg'
+import { footer_data } from '../../assets/assets'
 export default function Footer() {
   return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-32 bg-slate-50'>

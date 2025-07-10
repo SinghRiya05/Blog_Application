@@ -7,8 +7,8 @@ import twitter from "../../assets/twitter_icon.svg";
 import google from "../../assets/googleplus_icon.svg";
 
 import Moment from "moment";
-import Loader from "../Loader";
-import axios from "axios";
+import Loader from "../../components/Loader";
+import axios from "../../api/axios";
 
 export default function BlogPage() {
   const { id } = useParams();

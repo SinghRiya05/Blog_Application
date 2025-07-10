@@ -1,9 +1,9 @@
 
 import React from 'react'
 import { toast } from 'react-toastify';
-import logo from "../../assets/blog-logo.svg";
+import logo from "../../../assets/blog-logo.svg";
 import { Outlet, useNavigate } from 'react-router-dom';
-import Sidebar from './UserSidebar';
+import Sidebar from '../Sidebar_Elements/UserSidebar';
 
 export default function UserLayout() {
 const navigate=useNavigate()

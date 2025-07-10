@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
- 
-import axios from "../../api/axios"
+import {toast} from "react-toastify" 
+
+import axios from "../../../api/axios"
 export default function UserEditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,9 +52,10 @@ export default function UserEditBlog() {
       }
 
       await axios.put(`/blog/user/${id}`, data);
-      alert('Blog updated successfully!');
+      toast.success("Blog updated successfully")
       navigate('/user/listBlog'); 
     } catch (err) {
+      toast.error("Updation failed")
       console.error('Update failed:', err);
     }
   };

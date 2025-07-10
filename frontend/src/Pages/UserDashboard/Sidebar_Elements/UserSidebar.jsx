@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import homeicon from "../../assets/home_icon.svg"
-import plusicon from "../../assets/add_icon.svg"
-import listicon from "../../assets/list_icon.svg"
-import commenticon from "../../assets/comment_icon.svg"
+import homeicon from "../../../assets/home_icon.svg"
+import plusicon from "../../../assets/add_icon.svg"
+import listicon from "../../../assets/list_icon.svg"
+import commenticon from "../../../assets/comment_icon.svg"
 export default function UserSidebar() {
   return (
      <div className='flex flex-col border-r border-gray-200 min-h-full pt-6 bg-white'>

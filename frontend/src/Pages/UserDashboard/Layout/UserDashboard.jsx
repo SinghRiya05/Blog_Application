@@ -1,7 +1,7 @@
 import React from 'react'
-import SmallCard from './SmallCard'
+import SmallCard from '../SmallCard'
 import { useState } from 'react'
-import axios from "../../api/axios"
+import axios from "../../../api/axios"
 import { useEffect } from 'react';
 
 export default function UserDashboard() {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from "../api/axios";
+import axios from "../../api/axios";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from "./Footer"
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from "../../components/Footer/Footer"
 export default function Signup() {
     const navigate=useNavigate();
   const [email, setEmail] = useState('');

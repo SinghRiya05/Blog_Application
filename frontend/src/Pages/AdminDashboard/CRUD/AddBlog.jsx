@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import axios from "../../api/axios"
+import axios from "../../../api/axios"
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
-export default function UserAddBlog() {
-  const navigate=useNavigate()
+export default function AddBlog() {
  const [image,setImage]=useState(null);
  const [title,setTitle]=useState("");
  const [subTitle,setSubTitle]=useState("");
@@ -28,12 +26,12 @@ try {
         "Content-Type": "multipart/form-data",
       },
   })
-  toast.success("Blog is created")
-  navigate("/listBlog")
+  toast.success("Blog created successfully")
+  console.log("Blog is created : ",res.data);
   
 } catch (error) {
   console.log(error.message);
-  toast.error("Failed to create")
+  toast.error("Failed")
 }
 
 }
@@ -50,7 +48,6 @@ try {
       <input
         type="file"
         id="image"
-        required
         className="w-full border border-gray-300 rounded px-3 py-2"
         onChange={(e)=>setImage(e.target.files[0])}
       />
@@ -61,9 +58,9 @@ try {
       <label className="block text-gray-700 font-semibold mb-1">Blog Title</label>
       <input
         type="text"
-        required
         value={title}
         onChange={(e)=>setTitle(e.target.value)}
+        required
         placeholder="Enter blog title"
         className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />

@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
-import arrow from '../assets/arrow.svg'; // ✅ adjust path as per your folder
-import logo from '../assets/blog-logo.svg'; 
+import arrow from '../../assets/arrow.svg'; // ✅ adjust path as per your folder
+import logo from '../../assets/blog-logo.svg'; 
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 

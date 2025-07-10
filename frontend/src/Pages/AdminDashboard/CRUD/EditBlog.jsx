@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
- 
+import {toast} from "react-toastify"
+
 import axios from '../../../api/axios'
 
 export default function EditBlog() {
@@ -54,7 +55,9 @@ export default function EditBlog() {
       await axios.put(`/blog/admin/${id}`, data);
       alert('Blog updated successfully!');
       navigate('/admin/listBlog'); // ya user wali route
+      toast.success("Blog updated successfully")
     } catch (err) {
+      toast.error("Updation failed")
       console.error('Update failed:', err);
     }
   };
