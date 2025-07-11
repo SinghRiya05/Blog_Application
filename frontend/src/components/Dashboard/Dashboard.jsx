@@ -9,7 +9,7 @@ const [data,setData]=useState({totalBlogs:0,totalUsers:0});
 
 const fetchData=async()=>{
  try {
-  const res =await axios.get("/blog/admin",{
+  const res =await axios.get("blog/admin",{
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
