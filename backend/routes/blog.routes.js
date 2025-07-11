@@ -50,4 +50,4 @@ router.route("/user/count").get(verifyToken, getUserBlogCount);
 
 router.route("/user/draft").get(verifyToken, getdraftUserBlog);
 
-export default router;
+export default router;

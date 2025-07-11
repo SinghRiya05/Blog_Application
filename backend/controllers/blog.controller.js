@@ -128,6 +128,7 @@ export const deleteblog = asyncHandler(async (req, res) => {
 
 export const admindashboard = asyncHandler(async (req, res) => {
   try {
+
     const totalBlogs = await Blog.countDocuments();
     const totalUsers = await User.countDocuments();
 
