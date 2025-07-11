@@ -4,9 +4,13 @@ import { Blog } from "../models/blog.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
+import { generateUniqueSlug } from "../utils/slug.utility.js";
 
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, subTitle, description, category, isPublished } = req.body;
+  const author=req.user._id;
+   const slug = await generateUniqueSlug(title);
+
   //    if (
   //   [title, subtitle, description, category].some(
   //     (field) => typeof field !== "string" || field.trim() === ""
@@ -32,6 +36,7 @@ export const createBlog = asyncHandler(async (req, res) => {
     description,
     category,
     isPublished,
+    slug,
     image: image.url, // assuming you store the local path
     author: req.user?._id || null, // assuming user is authenticated and user info is in req.user
   });
@@ -80,6 +85,17 @@ export const getAllblogs = asyncHandler(async (req, res) => {
 });
 
 export const getSIngleBlog = asyncHandler(async (req, res) => {
+  const { slug } = req.params;
+  const blog = await Blog.findOne({slug}).populate("author", "username email ");
+  if (!blog) {
+    throw ApiError(404, "Blog not found");
+  }
+  return res
+    .status(201)
+    .json(new ApiResponse(200, blog, " blog fetched success fully"));
+});
+
+export const getSingleBlogByAdmin = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const blog = await Blog.findById(id).populate("author", "username email ");
   if (!blog) {
@@ -142,9 +158,14 @@ export const updateUserBlogs = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Blog not found");
   }
 
+
   if (blog.author.toString() !== userId) {
     throw new ApiError(403, "You are not an author of this blog");
   }
+
+   if (title && title !== blog.title) {
+      blog.slug = await generateUniqueSlug(title, blogId);
+    }
 
   let imageUrl = blog.image;
   if (req.file) {
@@ -179,7 +200,11 @@ export const updateBlogAdmin = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Blog not found");
   }
 
-  // ✅ Optional image upload
+   if (title && title !== blog.title) {
+      blog.slug = await generateUniqueSlug(title, blogId);
+    }
+
+  
   let imageUrl = blog.image;
   if (req.file) {
     const imageLocalPath = req.file.path;
@@ -189,6 +214,8 @@ export const updateBlogAdmin = asyncHandler(async (req, res) => {
     }
     imageUrl = image.url;
   }
+
+
 
   // ✅ Update fields
   blog.title = title || blog.title;
@@ -226,3 +253,5 @@ export const getdraftUserBlog = asyncHandler(async (req, res) => {
   }
   res.status(200).json(new ApiResponse(200, draftBlogs, "blog fetched"));
 });
+
+

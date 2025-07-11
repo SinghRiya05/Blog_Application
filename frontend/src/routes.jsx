@@ -22,7 +22,7 @@ const AppRoutes = ({ role, setRole }) => {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/blog/:id" element={<Blog />} />
+      <Route path="/blog/:slug" element={<Blog />} />
 
       {/* Admin Routes */}
       <Route
@@ -49,7 +49,7 @@ const AppRoutes = ({ role, setRole }) => {
         <Route path="addBlog" element={<UserAddBlog />} />
         <Route path="listBlog" element={<UserBloglist />} />
         <Route path="comments" element={<UserComment />} />
-        <Route path="/user/editBlog/:id" element={<UserEditBlog />} />
+        <Route path="/user/editBlog/:slug" element={<UserEditBlog />} />
       </Route>
 
       <Route path="/login" element={<Login setRole={setRole} />} />

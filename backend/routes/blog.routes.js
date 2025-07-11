@@ -9,6 +9,7 @@ import {
   getAllblogsUser,
   getdraftUserBlog,
   getSIngleBlog,
+  getSingleBlogByAdmin,
   getUserBlogCount,
   updateBlogAdmin,
   updateUserBlogs,
@@ -29,15 +30,21 @@ router.route("/AllUserBlog").get(verifyToken, getAllblogsUser);
 
 router.route("/admin").get(admindashboard);
 
-router.route("/:id").get(getSIngleBlog).delete(verifyToken, deleteblog);
+router.route("/slug/:slug").get(getSIngleBlog)
+
+router.route("/:id").delete(verifyToken, deleteblog);
 
 router
   .route("/admin/:id")
-  .put(verifyToken, isAdmin, upload.single("image"), updateBlogAdmin);
+  .put(verifyToken, isAdmin, upload.single("image"), updateBlogAdmin)
+  .get(verifyToken,isAdmin,getSingleBlogByAdmin)
 
 router
   .route("/user/:id")
-  .put(verifyToken, upload.single("image"), updateUserBlogs);
+  .put(verifyToken, upload.single("image"), updateUserBlogs)
+  
+
+  
 
 router.route("/user/count").get(verifyToken, getUserBlogCount);
 

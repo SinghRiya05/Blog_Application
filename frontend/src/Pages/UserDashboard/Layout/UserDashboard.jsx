@@ -11,7 +11,7 @@ const [draft,setDraft]=useState("0");
 const fetchUserBlogCount=async()=>{
   try {
    const res=await axios.get("blog/user/count");
-   console.log(res.data);
+
    
     setCount(res.data.data)
   } catch (error) {
@@ -23,7 +23,7 @@ const fetchUserBlogCount=async()=>{
 const fetchDraftBlog=async()=>{
   try {
    const res=await axios.get("blog/user/draft");
-   console.log(res.data);
+   
    
     setDraft(res.data.data)
   } catch (error) {

@@ -4,10 +4,11 @@ import {toast} from "react-toastify"
 
 import axios from "../../../api/axios"
 export default function UserEditBlog() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    id:"",
     title: '',
     subTitle: '',
     category: '',
@@ -17,13 +18,17 @@ export default function UserEditBlog() {
 
   const [image, setImage] = useState(null);
 
+
   
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`/blog/${id}`);
+        const res = await axios.get(`blog/slug/${slug}`);
+        console.log(res.data);
+        
         const blog = res.data.data;
         setFormData({
+          id:blog._id,
           title: blog.title,
           subTitle: blog.subTitle,
           category: blog.category,
@@ -35,8 +40,9 @@ export default function UserEditBlog() {
       }
     };
     fetchBlog();
-  }, [id]);
-
+  }, [slug]);
+ console.log(formData.id);
+ 
   // 🟢 Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +57,7 @@ export default function UserEditBlog() {
         data.append('image', image);
       }
 
-      await axios.put(`/blog/user/${id}`, data);
+      await axios.put(`/blog/user/${formData.id}`, data);
       toast.success("Blog updated successfully")
       navigate('/user/listBlog'); 
     } catch (err) {
@@ -116,15 +122,15 @@ export default function UserEditBlog() {
         /></div>
 
         
-        <label className="flex items-center gap-2">
+        <label className="flex items-center gap-3">
           <input
             type="checkbox"
             checked={formData.isPublished}
             onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
           />
-          Publish
+          Publish now
         </label>
-        <button type="submit" className="bg-blue-600 text-white py-2 rounded">
+        <button type="submit" className="bg-[#352f44] text-white py-2 px-5 w-full rounded">
           Update Blog
         </button>
       </form>

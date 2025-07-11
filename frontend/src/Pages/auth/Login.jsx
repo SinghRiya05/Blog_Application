@@ -32,11 +32,11 @@ export default function Login({ setRole }) {
         setRole(role);
 
         if (role === "admin") {
-          navigate("/admin");
+          navigate("/");
         } else if (role === "user") {
-          console.log("riya");
+          
 
-          navigate("/user");
+          navigate("/");
           console.log("singh");
         } else {
           setErrorMsg("Unknown user role.");

@@ -22,7 +22,7 @@ export default function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await axios.get(`/blog/${id}`);
+        const res = await axios.get(`blog/admin/${id}`);
         const blog = res.data.data;
         setFormData({
           title: blog.title,
@@ -53,13 +53,14 @@ export default function EditBlog() {
       }
 
       await axios.put(`/blog/admin/${id}`, data);
-      alert('Blog updated successfully!');
-      navigate('/admin/listBlog'); // ya user wali route
+      toast.success('Blog updated successfully!');
+      navigate('/admin/listBlog'); 
       toast.success("Blog updated successfully")
     } catch (err) {
       toast.error("Updation failed")
       console.error('Update failed:', err);
     }
+   
   };
 
   return (
@@ -124,9 +125,9 @@ export default function EditBlog() {
             checked={formData.isPublished}
             onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
           />
-          Publish
+          Publish now
         </label>
-        <button type="submit" className="bg-blue-600 text-white py-2 rounded">
+        <button type="submit" className="bg-[#352f44] w-full text-white py-2 rounded">
           Update Blog
         </button>
       </form>

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import axios from "../../../api/axios"
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../../components/Loader';
+
 
 export default function UserAddBlog() {
   const navigate=useNavigate()
@@ -11,9 +13,11 @@ export default function UserAddBlog() {
  const [category,setCategory]=useState("");
  const [description,setDescription]=useState("");
  const [isPublished, setIsPublished] = useState(false);
+ const [loader,setLoader]=useState(false)
   
 const handleSubmit=async(e)=>{
    e.preventDefault();
+    setLoader(true);
    const formData=new FormData();
    formData.append("title",title);
    formData.append("image",image);
@@ -22,20 +26,29 @@ const handleSubmit=async(e)=>{
    formData.append("category",category);
    formData.append("isPublished",isPublished);
 
+
+
 try {
   const res=await axios.post("/blog",formData,{
     headers: {
         "Content-Type": "multipart/form-data",
       },
   })
+ setLoader(false);
   toast.success("Blog is created")
-  navigate("/listBlog")
-  
+ 
+  navigate("/user/listBlog")
 } catch (error) {
   console.log(error.message);
   toast.error("Failed to create")
 }
 
+}
+
+if(loader){
+  return(<div className='w-full text-center '>
+    <Loader/></div>
+  )
 }
 
   return (

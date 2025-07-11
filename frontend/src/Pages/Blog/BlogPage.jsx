@@ -10,7 +10,8 @@ import axios from "../../api/axios";
 import { toast } from "react-toastify";
 
 export default function BlogPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
+
   const [data, setData] = useState(null); // initially null to avoid errors
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
@@ -21,14 +22,12 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        
-        const res = await axios.get(`/blog/${id}`);
+        const res = await axios.get(`blog/slug/${slug}`);
         const blogData = res.data.data;
         setData(blogData);
 
-        
         const commentsRes = await axios.get(`comment/fetch/${blogData._id}`);
-        setComments(commentsRes.data.data.comments||[]);
+        setComments(commentsRes.data.data.comments || []);
       } catch (error) {
         console.log("Error fetching blog/comments:", error);
       }
@@ -36,7 +35,7 @@ export default function BlogPage() {
 
     fetchAll();
     setIsLoggedIn(!!token); // true if token exists
-  }, [id, token]);
+  }, [slug, token]);
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -72,8 +71,7 @@ export default function BlogPage() {
 
       const newComment = res.data?.data?.comment || res.data?.data; // depends on backend structure
 
- 
-    setComments((prevComments) => [newComment, ...prevComments]);
+      setComments((prevComments) => [newComment, ...prevComments]);
 
       setContent("");
     } catch (error) {
@@ -101,7 +99,11 @@ export default function BlogPage() {
 
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
         <div className="flex justify-center">
-          <img src={data.image} alt="blog" className="rounded-3xl mb-5 w-[30rem]" />
+          <img
+            src={data.image}
+            alt="blog"
+            className="rounded-3xl mb-5 w-[30rem]"
+          />
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: data.description }}
@@ -127,7 +129,9 @@ export default function BlogPage() {
                     alt="user"
                     className="rounded-full"
                   />
-                  <h3 className="text-lg font-medium">{item.author?.username}</h3>
+                  <h3 className="text-lg font-medium">
+                    {item.author?.username}
+                  </h3>
                 </div>
                 <p className="mt-2 ml-10 text-base max-w-md text-gray-700">
                   {item.content}
