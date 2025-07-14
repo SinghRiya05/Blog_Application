@@ -4,7 +4,8 @@ import homeicon from "../../../assets/home_icon.svg"
 import plusicon from "../../../assets/add_icon.svg"
 import listicon from "../../../assets/list_icon.svg"
 import commenticon from "../../../assets/comment_icon.svg"
-
+import list from "../../../assets/rectangle-list-regular.svg"
+import addCategory from "../../../assets/square-plus-regular.svg"
 export default function Sidebar() {
   return (
     <div className='flex flex-col border-r border-gray-200 min-h-full pt-6'>
@@ -30,6 +31,15 @@ export default function Sidebar() {
         <p className='hidden md:inline-block'>Comments</p>
        
       </NavLink>
+      <NavLink  to="/admin/category" className={({isActive})=>`flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-64 cursor-pointer ${isActive && "bg-slate-300 border-r-4 border-gray-500"} `}>
+        <img src={addCategory} alt="" className='min-w-4 w-5'/>
+        <p className='hidden md:inline-block'>Add Category</p>
+      </NavLink>
+      <NavLink  to="/admin/categorylist" className={({isActive})=>`flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-64 cursor-pointer ${isActive && "bg-slate-300 border-r-4 border-gray-500"} `}>
+        <img src={list} alt="" className='min-w-4 w-5'/>
+        <p className='hidden md:inline-block'>Category list</p>
+      </NavLink>
+     
     </div>
   )
 }

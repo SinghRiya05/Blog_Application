@@ -42,7 +42,7 @@ function toTitleCase(str) {
 }
 
   return (
-    <div className=" p-5 sm:p-3">
+    <div className=" p-5 sm:p-3 shadow-md">
       <div className="flex justify-between items-center sm:mx-4 lg:mx-16 ">
         
         <div className="flex items-center gap-5 ">

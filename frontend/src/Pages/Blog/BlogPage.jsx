@@ -110,8 +110,32 @@ export default function BlogPage() {
           className="rich-text max-w-3xl mx-auto mt-3"
         ></div>
 
-        {/* Comments Section */}
-        <div className="mt-14 mb-10 max-w-3xl mx-auto">
+       
+
+        {/* Add Comment */}
+        <div className="max-w-3xl mx-auto mt-10">
+          <p className="font-semibold mb-4">Add your comment</p>
+          <form
+            onSubmit={addComment}
+            className="flex flex-col items-start gap-4 max-w-lg"
+          >
+            <textarea
+              placeholder="Comment"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded outline-none h-40 font-medium text-base"
+            ></textarea>
+            <button
+              type="submit"
+              className="px-10 py-3 border-none text-white rounded-xl lg:text-base sm:text-sm cursor-pointer bg-[#352f44] hover:scale-105 transition-all duration-300"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+
+         {/* Comments Section */}
+        <div className="mt-10 mb-10 max-w-3xl mx-auto">
           <p className="text-xl font-semibold my-6">
             Comments ({comments.length})
           </p>
@@ -142,28 +166,6 @@ export default function BlogPage() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Add Comment */}
-        <div className="max-w-3xl mx-auto">
-          <p className="font-semibold mb-4">Add your comment</p>
-          <form
-            onSubmit={addComment}
-            className="flex flex-col items-start gap-4 max-w-lg"
-          >
-            <textarea
-              placeholder="Comment"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded outline-none h-40 font-medium text-base"
-            ></textarea>
-            <button
-              type="submit"
-              className="px-10 py-3 border-none text-white rounded-xl lg:text-base sm:text-sm cursor-pointer bg-[#352f44] hover:scale-105 transition-all duration-300"
-            >
-              Submit
-            </button>
-          </form>
         </div>
 
         {/* Share Buttons */}

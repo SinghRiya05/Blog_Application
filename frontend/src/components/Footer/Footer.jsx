@@ -1,32 +1,52 @@
-import React from 'react'
-import logo from '../../assets/blog-logo.svg'
-import { footer_data } from '../../assets/assets'
+import React from 'react';
+import logo from '../../assets/blog-logo.svg';
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
-    <div className='px-6 md:px-16 lg:px-24 xl:px-32 bg-slate-50'>
-     <div className='flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-gray-500/30 text gray-500'>
-<div > 
-    <div className='flex items-center gap-5'><img src={logo} alt="" width={50} />
-    <h2>MyBlogSpace</h2></div>
-    <p className='max-w-[410px] mt-6 opacity-80'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, laudantium corporis! Eligendi animi sed illo necessitatibus modi at fugit tempora?
-    </p>
-</div>
-<div className='flex flex-wrap justify-between w-full md:w-[45%] gap-5'>
-    {footer_data.map((section,index)=>(
-        <div key={index}>
-            <h3 className='font-semibold text-base text-gray-700 md:mb-5 mb-2'>{section.title}</h3>
-            <ul className='text-sm space-y-1'>
-                {section.links.map((link,i)=>(
-                    <li key={i} className='list-none '>
-                        <a href="#" className='hover:underline transition no-underline text-gray-700'>{link}</a>
-                    </li>
-                ))}
-            </ul>
+    <div className="bg-slate-50 px-6 md:px-16 lg:px-24 xl:px-32">
+      {/* Top Section */}
+      <div className="flex flex-col md:flex-row justify-between gap-10 py-10 border-b border-gray-300 text-gray-600">
+        
+        {/* Logo + About */}
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-4">
+            <img src={logo} alt="Logo" width={40} />
+            <h2 className="text-xl font-semibold text-gray-800">MyBlogSpace</h2>
+          </div>
+          <p className="max-w-md text-sm md:text-base opacity-80 leading-relaxed">
+            Discover inspiring stories, tech tips, and personal journeys. Share your voice with the world. Connect, learn, and grow through blogs. Powered by passion, written by you.
+          </p>
         </div>
-    ))}
-</div>
-     </div>
-     <p className='py-4 text-center text-sm md:text-base text-gray-500/80'>Copyright 2025 MyBlogSpace -All Right Reserved</p>
+
+        {/* Quick Links + Support (Now Responsive) */}
+        <div className="flex flex-col sm:flex-row flex-1 justify-between gap-10">
+          <div>
+            <h3 className="font-semibold text-gray-700 mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/" className="hover:text-blue-500">Home</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">All Blogs</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">Write Blog</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-gray-700 mb-4">Support</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/" className="hover:text-blue-500">About</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">Privacy Policy</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">Terms & Conditions</Link></li>
+              <li><Link to="/" className="hover:text-blue-500">Help Center</Link></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="py-4 text-center text-xs md:text-sm text-gray-500">
+        © 2025 MyBlogSpace — All Rights Reserved
+      </div>
     </div>
-  )
+  );
 }

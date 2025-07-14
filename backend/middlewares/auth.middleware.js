@@ -7,8 +7,6 @@ export const verifyToken = asyncHandler(
   async (req, res, next) => {
     try {
       let token;
-
-      // ✅ Check cookie token
       if (req.cookies && req.cookies.token) {
         token = req.cookies.token;
       }

@@ -8,13 +8,9 @@ const blogSchema = new mongoose.Schema(
     },
     subTitle: {
       type: String,
-      required: true,
+      default:""
     },
     description: {
-      type: String,
-      required: true,
-    },
-    category: {
       type: String,
       required: true,
     },
@@ -30,6 +26,11 @@ const blogSchema = new mongoose.Schema(
     isPublished: {
       type: Boolean,
       required: true,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category", 
+      required: true
     },
 
     author: {

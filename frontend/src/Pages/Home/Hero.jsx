@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <div className="text-center mt-20 px-4 sm:px-8 ">
+    <div className="text-center mt-14 px-4 sm:px-8 ">
       {/* Hero Title */}
       <h1 className="text-4xl sm:text-6xl lg:text-6xl font-semibold text-gray-800">
         Create. Express. Connect — <br /> all in your own space.

@@ -5,26 +5,29 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js";
 import { generateUniqueSlug } from "../utils/slug.utility.js";
+import {Comment} from "../models/comment.model.js"
+import {Category} from "../models/category.model.js"
+import { log } from "console";
 
 export const createBlog = asyncHandler(async (req, res) => {
   const { title, subTitle, description, category, isPublished } = req.body;
+  
+  
   const author=req.user._id;
    const slug = await generateUniqueSlug(title);
 
-  //    if (
-  //   [title, subtitle, description, category].some(
-  //     (field) => typeof field !== "string" || field.trim() === ""
-  //   )
-  // ) {
-  //   throw new ApiError(400, "All fields are required and must be non-empty strings");
-  // }
+  if (!title || !description || !category ) {
+    throw new ApiError(400, "All fields required");
+  }
+const existingCategory = await Category.findById(category);
 
+  if (!existingCategory) {
+    throw new ApiError(404, "Category not found");
+  }
   const imageFile = req.file;
   if (!imageFile) {
     throw new ApiError(400, "Image file is required");
   }
-
-  console.log(req.user);
 
   const imageLocalPath = imageFile.path;
 
@@ -40,6 +43,7 @@ export const createBlog = asyncHandler(async (req, res) => {
     image: image.url, // assuming you store the local path
     author: req.user?._id || null, // assuming user is authenticated and user info is in req.user
   });
+  
 
   const createdBlog = await Blog.findById(blog._id);
   if (!createdBlog) {
@@ -52,7 +56,7 @@ export const createBlog = asyncHandler(async (req, res) => {
 });
 
 export const getAllblogsAdmin = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({}).sort({createdAt:-1});
+  const blogs = await Blog.find({}).populate("category", "name slug").sort({createdAt:-1});
   if (!blogs) {
     throw ApiError(404, "Blogs not found");
   }
@@ -64,7 +68,7 @@ export const getAllblogsAdmin = asyncHandler(async (req, res) => {
 export const getAllblogsUser = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
-  const blogs = await Blog.find({ author: userId }).sort({ createdAt: -1 });
+  const blogs = await Blog.find({ author: userId }).populate("category", "name slug").sort({ createdAt: -1 });
 
   if (blogs.length === 0) {
     throw new ApiError(404, "Blogs not found");
@@ -75,18 +79,37 @@ export const getAllblogsUser = asyncHandler(async (req, res) => {
 });
 
 export const getAllblogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({ isPublished: true }).sort({ createdAt: -1 });
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 6;
+  const skip = (page - 1) * limit;
+
+  // Total number of published blogs (for frontend pagination)
+  const total = await Blog.countDocuments({ isPublished: true });
+
+  const blogs = await Blog.find({ isPublished: true })
+    .populate("category", "name slug")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
   if (!blogs || blogs.length === 0) {
     throw ApiError(404, "No published blogs found");
   }
-  return res
-    .status(201)
-    .json(new ApiResponse(200, blogs, "All blogs fetched success fully"));
+
+  return res.status(200).json(
+    new ApiResponse(200, {
+      blogs,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    }, "All blogs fetched successfully")
+  );
 });
 
 export const getSIngleBlog = asyncHandler(async (req, res) => {
   const { slug } = req.params;
-  const blog = await Blog.findOne({slug}).populate("author", "username email ");
+  const blog = await Blog.findOne({slug}).populate("author", "username email ").populate("category","name slug")
   if (!blog) {
     throw ApiError(404, "Blog not found");
   }
@@ -112,6 +135,7 @@ export const deleteblog = asyncHandler(async (req, res) => {
   const role = req.user.role;
   console.log(req.user.role);
 
+  await Comment.deleteMany({blog:blogid});
   const blog = await Blog.findById(blogid);
   if (!blog) {
     throw new ApiError(404, "Blog not found");
@@ -132,9 +156,6 @@ export const admindashboard = asyncHandler(async (req, res) => {
     const totalBlogs = await Blog.countDocuments();
     const totalUsers = await User.countDocuments();
 
-    console.log("Total Blogs:", totalBlogs);
-    console.log("Total Users:", totalUsers);
-
     res
       .status(200)
       .json(
@@ -153,7 +174,10 @@ export const updateUserBlogs = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const blogId = req.params.id;
   const { title, subTitle, category, description, isPublished } = req.body;
-
+  if (category) {
+  const cat = await Category.findById(category);
+  if (!cat) throw new ApiError(404, "Category not found");
+}
   const blog = await Blog.findById(blogId);
   if (!blog) {
     throw new ApiError(404, "Blog not found");
@@ -186,6 +210,8 @@ export const updateUserBlogs = asyncHandler(async (req, res) => {
   blog.image = imageUrl;
 
   const updatedBlog = await blog.save();
+  
+  
 
   res
     .status(200)
@@ -195,6 +221,10 @@ export const updateUserBlogs = asyncHandler(async (req, res) => {
 export const updateBlogAdmin = asyncHandler(async (req, res) => {
   const blogId = req.params.id;
   const { title, subTitle, category, description, isPublished } = req.body;
+   if (category) {
+  const cat = await Category.findById(category);
+  if (!cat) throw new ApiError(404, "Category not found");
+}
 
   const blog = await Blog.findById(blogId);
   if (!blog) {
@@ -235,7 +265,6 @@ export const updateBlogAdmin = asyncHandler(async (req, res) => {
 
 export const getUserBlogCount = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  console.log(userId);
 
   const totalBlogs = await Blog.countDocuments({ author: userId });
 
@@ -255,4 +284,15 @@ export const getdraftUserBlog = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, draftBlogs, "blog fetched"));
 });
 
+export const getBlogsByCategory = asyncHandler(async (req, res) => {
+  const { slug } = req.params;
+  const category = await Category.findOne({ slug });
+  if (!category) throw new ApiError(404, "Category not found");
+
+  const blogs = await Blog.find({ category: category._id, isPublished: true })
+    .populate("author", "username")
+    .populate("category", "name slug");
+
+  res.status(200).json(new ApiResponse(200, blogs, "Blogs by category"));
+});
 

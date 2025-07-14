@@ -4,9 +4,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./Pages/Home/Homepage";
 import Layout from "./Pages/AdminDashboard/Layout/Layout";
 import Dashboard from "./Pages/AdminDashboard/Layout/Dashboard";
-import AddBlog from "./Pages/AdminDashboard/CRUD/AddBlog";
-import Bloglist from "./Pages/AdminDashboard/CRUD/Bloglist";
-import Comment from "./Pages/AdminDashboard/CRUD/Comment";
+import AddBlog from "./Pages/AdminDashboard/CRUD-blog/AddBlog";
+import Bloglist from "./Pages/AdminDashboard/CRUD-blog/Bloglist";
+import Comment from "./Pages/AdminDashboard/CRUD-blog/Comment";
 import Signup from "./Pages/auth/Signup";
 import Login from "./Pages/auth/Login";
 import UserLayout from "./Pages/UserDashboard/Layout/UserLayout"
@@ -15,8 +15,11 @@ import UserAddBlog from "./Pages/UserDashboard/CRUD/UserAddBlog";
 import UserBloglist from "./Pages/UserDashboard/CRUD/UserBloglist";
 import UserComment from "./Pages/UserDashboard/CRUD/UserComment";
 import Blog from "./Pages/Blog/Blog";
-import EditBlog from "./Pages/AdminDashboard/CRUD/EditBlog";
+import EditBlog from "./Pages/AdminDashboard/CRUD-blog/EditBlog";
 import UserEditBlog from "./Pages/UserDashboard/CRUD/UserEditBlog";
+import AddCategory from "./Pages/AdminDashboard/CRUD-cat/AddCategory";
+import CatList from "./Pages/AdminDashboard/CRUD-cat/CatList";
+import UpdateCategory from "./Pages/AdminDashboard/CRUD-cat/UpdateCategory";
 
 const AppRoutes = ({ role, setRole }) => {
   return (
@@ -36,6 +39,9 @@ const AppRoutes = ({ role, setRole }) => {
         <Route path="listBlog" element={<Bloglist />} />
         <Route path="comments" element={<Comment />} />
         <Route path="/admin/editBlog/:id" element={<EditBlog />} />
+        <Route path="/admin/category" element={<AddCategory />} />
+        <Route path="/admin/categorylist" element={<CatList />} />
+        <Route path="/admin/updateCategory/:id" element={<UpdateCategory />} />
       </Route>
 
       {/* User Routes */}

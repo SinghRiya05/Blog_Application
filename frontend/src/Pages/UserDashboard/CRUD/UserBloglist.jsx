@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../../../api/axios';
 import deleteicon from "../../../assets/bin_icon.svg"
 import {toast} from "react-toastify"
+import Loader from '../../../components/Loader';
+
+
 export default function UserBloglist() {
 const navigate=useNavigate()
+const [loader,setLoader]=useState(false);
 
   const [blogs, setBlogs] = useState([]);
    const handleDelete=async(id)=>{
@@ -19,6 +23,7 @@ const navigate=useNavigate()
     }
    }
   useEffect(() => {
+    setLoader(true)
     const fetchUserBlogs = async () => {
       try {
         const response = await axios.get(`/blog/AllUserBlog`,{ headers:{
@@ -26,17 +31,37 @@ const navigate=useNavigate()
         }
         });
         setBlogs(response.data.data);
+        setLoader(false)
       } catch (error) {
+        setLoader(false);
         console.error('Error fetching blogs:', error);
       }
     };
 
     fetchUserBlogs();
   }, []);
-   if (!blogs || blogs.length === 0) {
+
+
+
+if (loader) {
+    return (
+      <div className="w-full text-center ">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (blogs.length === 0) {
   return (<div className=' flex justify-center mt-10 text-center w-full'><p className='text-xl'>Blogs are Empty!</p></div>);
 }
 
+ 
+
+
+ 
+
+
+  
 
    return (
     <div className='w-full  p-4'>

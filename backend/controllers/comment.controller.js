@@ -25,17 +25,7 @@ export const createComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, newComment, "Comment added successfully"));
 });
 
-export const getTotalCommentsForAdmin = asyncHandler(async (req, res) => {
-  try {
-    const totalComments = await Comment.countDocuments();
 
-    return res
-      .status(201)
-      .json(new ApiResponse(201, totalComments, "Comments fetched"));
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 export const getCommentsByBlog = asyncHandler(async (req, res) => {
   const comments = await Comment.find({ blog: req.params.blogId }).populate(
