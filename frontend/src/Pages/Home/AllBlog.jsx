@@ -30,12 +30,16 @@ export default function AllBlog() {
   if (loading) return <Loader />;
 
   return (
-    <div className="px-4 lg:mx-20 py-8 mt-5">
+    <div className="bg-gray-100 text-gray-800">
+     
+    <div className="px-5 lg:mx-20 py-8  bg-opacity-80 ">
+       <div className="text-center  hover:font-semibold transition-all duration-1000 ease-in shadow-lg rounded-lg bg-slate-200 mb-10">
+        <p className="text-3xl py-5 px-5 underline cursor-default  block"> Browse All Blogs</p></div>
       {/* Blog Cards */}
       {blogs.length === 0 ? (
         <div className="text-center mt-10 text-xl">No Blogs Found</div>
       ) : (
-        <div className="flex flex-wrap justify-evenly gap-6">
+        <div className="flex flex-wrap justify-between gap-6">
           {blogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
           ))}
@@ -47,7 +51,7 @@ export default function AllBlog() {
         <button
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
           disabled={page === 1}
-          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+          className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
         >
           Prev
         </button>
@@ -59,11 +63,12 @@ export default function AllBlog() {
         <button
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={page === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
         >
           Next
         </button>
       </div>
+    </div>
     </div>
   );
 }

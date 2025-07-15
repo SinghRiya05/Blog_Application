@@ -7,6 +7,7 @@ import {
   getAllblogs,
   getAllblogsAdmin,
   getAllblogsUser,
+  getBlogsByCategory,
   getdraftUserBlog,
   getSIngleBlog,
   getSingleBlogByAdmin,
@@ -49,5 +50,7 @@ router
 router.route("/user/count").get(verifyToken, getUserBlogCount);
 
 router.route("/user/draft").get(verifyToken, getdraftUserBlog);
+
+router.get("/category/:slug",getBlogsByCategory)
 
 export default router;

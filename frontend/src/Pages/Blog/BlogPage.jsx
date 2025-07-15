@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import user_icon from "../../assets/user_icon.svg";
 import facebook from "../../assets/facebook_icon.svg";
+
 import twitter from "../../assets/twitter_icon.svg";
 import google from "../../assets/googleplus_icon.svg";
 import Moment from "moment";
@@ -83,18 +84,14 @@ export default function BlogPage() {
   if (!data) return <Loader />;
 
   return (
-    <div className="mt-2 relative">
-      <div className="text-center mt-10 leading-[2.5rem]">
-        <p className="text-[#352f44] text-lg">
-          Published on {Moment(data.createdAt).format("MMMM D YYYY")}
-        </p>
+    <div className=" relative bg-slate-100 " >
+      <div className="text-center pt-10 leading-[2.5rem]">
+        
         <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-5xl mt-2.5 font-semibold max-w-2xl mx-auto">
           {data.title}
         </h2>
-        <p className="text-gray-600 max-w-lg my-5 mx-auto">{data.subTitle}</p>
-        <p className="inline-block py-0.8 px-4 rounded-full border border-[#352f44] bg-gray-100 font-medium mb-2">
-          Author : {data.author?.username}
-        </p>
+        <p className="text-gray-600 max-w-lg my-5 mx-auto ">{data.subTitle}</p>
+        
       </div>
 
       <div className="mx-5 max-w-5xl md:mx-auto my-10 mt-6">
@@ -102,13 +99,23 @@ export default function BlogPage() {
           <img
             src={data.image}
             alt="blog"
-            className="rounded-3xl mb-5 w-[30rem]"
+            className="rounded-3xl mb-5 w-[40rem] h-[30rem] object-cover "
           />
         </div>
+      
         <div
           dangerouslySetInnerHTML={{ __html: data.description }}
-          className="rich-text max-w-3xl mx-auto mt-3"
-        ></div>
+          className="rich-text max-w-3xl mx-auto mt-3 bg-white p-2 px-10 rounded-lg"
+        >
+          
+        </div>
+        <div className="max-w-3xl text-right pr-16">
+        <p className="inline-block text-blue-950  text-base py-1  font-medium  ">
+          Written by : {data.author?.username}
+        </p>
+          <p className=" text-blue-950 text-base">
+          Published on {Moment(data.createdAt).format("MMMM D YYYY")}
+        </p></div>
 
        
 
@@ -123,7 +130,7 @@ export default function BlogPage() {
               placeholder="Comment"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded outline-none h-40 font-medium text-base"
+              className="w-full p-2 border border-gray-300 rounded-lg outline-none h-20 font-medium text-base"
             ></textarea>
             <button
               type="submit"

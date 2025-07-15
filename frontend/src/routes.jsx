@@ -20,12 +20,22 @@ import UserEditBlog from "./Pages/UserDashboard/CRUD/UserEditBlog";
 import AddCategory from "./Pages/AdminDashboard/CRUD-cat/AddCategory";
 import CatList from "./Pages/AdminDashboard/CRUD-cat/CatList";
 import UpdateCategory from "./Pages/AdminDashboard/CRUD-cat/UpdateCategory";
+import CategoryPage from "./Pages/Category/CategoryPage";
+
+import CategoryMain from "./Pages/Category/CatPages/CategoryMain";
+import NotFound from "./Pages/NotFound";
+import About from "./Pages/About/About";
 
 const AppRoutes = ({ role, setRole }) => {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/blog/:slug" element={<Blog />} />
+      <Route path="/categories" element={<CategoryPage/>}/>
+      <Route path="/categories/:slug" element={<CategoryMain/>}/>
+      <Route path="/categories/:slug/blog/:slug" element={<Blog/>}/>
+      <Route path="*" element={<NotFound/>}/>
+      <Route path="/about" element={<About/>}/>
 
       {/* Admin Routes */}
       <Route

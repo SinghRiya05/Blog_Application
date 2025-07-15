@@ -58,8 +58,8 @@ export default function Login({ setRole }) {
   return (
     <div>
       <Navbar />
-      <div className="flex justify-center items-center mt-16">
-        <div className="border-2 border-black px-10 py-8 rounded-lg shadow-md w-full max-w-md hover:scale-105 transition-all duration-700 hover:shadow-md hover:bg-gray-100">
+      <div className="flex justify-center items-center mt-16 mb-16">
+        <div className=" bg-gray-200 px-10 py-8 rounded-lg shadow-md w-full max-w-md hover:scale-105 transition-all duration-700 hover:shadow-md hover:bg-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
           {errorMsg && (
             <p className="text-red-500 mb-4 text-center">{errorMsg}</p>
@@ -98,7 +98,7 @@ export default function Login({ setRole }) {
 
             <button
               type="submit"
-              className="bg-[#352f44] text-white py-2 rounded hover:bg-[#2e293d] transition duration-300"
+              className="bg-blue-950 text-white py-2 rounded hover:bg-[#2e293d] transition duration-300"
             >
               Login
             </button>
