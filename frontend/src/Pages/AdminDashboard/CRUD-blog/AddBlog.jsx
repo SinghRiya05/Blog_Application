@@ -3,7 +3,7 @@ import axios from "../../../api/axios"
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import Loader from '../../../components/Loader';
-
+import TextEditor from "../../../components/TextEditor"
 export default function AddBlog() {
    const navigate = useNavigate();
   const [categories, setCategories] = useState([]);  
@@ -109,13 +109,11 @@ try {
     {/* Description */}
     <div>
       <label className="block text-gray-700 font-semibold mb-1">Blog Description</label>
-      <textarea
-        rows="20"
+      <TextEditor
         value={description}
-        onChange={(e)=>{setDescription(e.target.value)}}
-        placeholder="Enter blog content..."
-        className="w-full border border-gray-300 rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
-      ></textarea>
+        onChange={setDescription}
+       
+      />
     </div>
 
     {/* Category */}

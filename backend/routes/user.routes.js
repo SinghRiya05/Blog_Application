@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { loginUser, logoutUser, registerUser } from "../controllers/user.controller.js";
+import { getAllUser, loginUser, logoutUser, registerUser } from "../controllers/user.controller.js";
+import {verifyToken} from "../middlewares/auth.middleware.js"
+import { isAdmin } from "../middlewares/role.middleware.js";
+
 const router=Router();
 
 router.route("/register")
@@ -10,5 +13,7 @@ router.route("/login")
 
 router.route("/logout")
 .post(logoutUser)
+
+router.get("/",verifyToken,isAdmin,getAllUser)
 
 export default router;

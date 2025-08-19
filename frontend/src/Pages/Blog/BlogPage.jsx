@@ -109,7 +109,7 @@ export default function BlogPage() {
         >
           
         </div>
-        <div className="max-w-3xl text-right pr-16">
+        <div className="lg:mr-16 mt-2 text-right pr-16">
         <p className="inline-block text-blue-950  text-base py-1  font-medium  ">
           Written by : {data.author?.username}
         </p>
@@ -134,7 +134,7 @@ export default function BlogPage() {
             ></textarea>
             <button
               type="submit"
-              className="px-10 py-3 border-none text-white rounded-xl lg:text-base sm:text-sm cursor-pointer bg-[#352f44] hover:scale-105 transition-all duration-300"
+              className="px-10 py-3 border-none text-white rounded-xl lg:text-base sm:text-sm cursor-pointer bg-blue-950 hover:scale-105 transition-all duration-300"
             >
               Submit
             </button>
@@ -151,7 +151,7 @@ export default function BlogPage() {
             {comments.map((item, index) => (
               <div
                 key={index}
-                className="border-2 border-black p-4 rounded-md shadow-md bg-white relative max-w-xl"
+                className="border-2  p-4 rounded-md shadow-md bg-white relative max-w-xl"
               >
                 <div className="flex items-center gap-3">
                   <img

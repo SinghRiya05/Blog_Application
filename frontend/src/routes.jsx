@@ -25,6 +25,7 @@ import CategoryPage from "./Pages/Category/CategoryPage";
 import CategoryMain from "./Pages/Category/CatPages/CategoryMain";
 import NotFound from "./Pages/NotFound";
 import About from "./Pages/About/About";
+import UserList from "./Pages/AdminDashboard/Layout/UserList";
 
 const AppRoutes = ({ role, setRole }) => {
   return (
@@ -48,10 +49,12 @@ const AppRoutes = ({ role, setRole }) => {
         <Route path="addBlog" element={<AddBlog />} />
         <Route path="listBlog" element={<Bloglist />} />
         <Route path="comments" element={<Comment />} />
-        <Route path="/admin/editBlog/:id" element={<EditBlog />} />
-        <Route path="/admin/category" element={<AddCategory />} />
-        <Route path="/admin/categorylist" element={<CatList />} />
-        <Route path="/admin/updateCategory/:id" element={<UpdateCategory />} />
+        <Route path="editBlog/:id" element={<EditBlog />} />
+        <Route path="category" element={<AddCategory />} />
+        <Route path="categorylist" element={<CatList />} />
+        <Route path="updateCategory/:id" element={<UpdateCategory />} />
+
+        <Route path="userlist" element={<UserList />} />
       </Route>
 
       {/* User Routes */}

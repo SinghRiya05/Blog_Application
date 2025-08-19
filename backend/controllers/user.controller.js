@@ -87,3 +87,19 @@ export const logoutUser = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, null, "User logged out successfully"));
 });
+
+export const getAllUser=asyncHandler(
+  async(req,res)=>{
+   try {
+     const allUsers=await User.find();
+     if(!allUsers){
+       throw new ApiError("404","User not found")
+     }
+     res.status(200).json(
+       new ApiResponse(200,allUsers,"Users fetched successfully")
+     )
+   } catch (error) {
+    throw new ApiError(500,"error in fetching Users")
+   }
+  }
+)

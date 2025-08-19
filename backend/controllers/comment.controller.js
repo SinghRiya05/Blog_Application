@@ -44,3 +44,23 @@ export const getCommentsByBlog = asyncHandler(async (req, res) => {
       )
     );
 });
+
+
+export const getAllComments=asyncHandler(
+  async(req,res)=>{
+    console.log("riya");
+    
+   try {
+     const comments=await Comment.find().populate("author")
+     if(!comments){
+       throw new ApiError(404,"Comments not found");
+     }
+     
+     res.status(200).json(
+       new ApiResponse(200,comments,"Comments fetched successfully")
+     )
+   } catch (error) {  
+   res.json(error)
+   }
+  }
+)
