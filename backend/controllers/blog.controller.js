@@ -68,7 +68,7 @@ export const getAllblogsAdmin = asyncHandler(async (req, res) => {
 export const getAllblogsUser = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
-  const blogs = await Blog.find({ author: userId }).populate("category", "name slug").sort({ createdAt: -1 });
+  const blogs = await Blog.find({ author: userId }).populate("category", "name slug").populate("author", "username").sort({ createdAt: -1 });
 
   if (blogs.length === 0) {
     throw new ApiError(404, "Blogs not found");
@@ -88,6 +88,7 @@ export const getAllblogs = asyncHandler(async (req, res) => {
 
   const blogs = await Blog.find({ isPublished: true })
     .populate("category", "name slug")
+    .populate("author", "username ")
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);

@@ -8,9 +8,11 @@ export default function UserDashboard() {
 const [Count,setCount]=useState("0");
 const [draft,setDraft]=useState("0");
 
+const token = localStorage.getItem("token");
+
 const fetchUserBlogCount=async()=>{
   try {
-   const res=await axios.get("blog/user/count");
+   const res=await axios.get("blog/user/count",{headers:{Authorization:`Bearer ${token}`}});
 
    
     setCount(res.data.data)

@@ -3,7 +3,7 @@ import hero from "../../assets/hero1.jpg";
 
 export default function Hero() {
   return (
-    <div className="relative h-[42rem] overflow-hidden flex items-center justify-center text-center px-4 sm:px-8">
+    <div className="relative h-[38rem] overflow-hidden flex items-center justify-center text-center px-4 sm:px-8">
 
      
       <img

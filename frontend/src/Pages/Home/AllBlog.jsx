@@ -14,7 +14,9 @@ export default function AllBlog() {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/blog/AllBlog?page=${page}&limit=${limit}`);
+        const res = await axios.get(
+          `/blog/AllBlog?page=${page}&limit=${limit}`
+        );
         setBlogs(res.data.data.blogs);
         setTotalPages(res.data.data.totalPages);
       } catch (err) {
@@ -30,45 +32,43 @@ export default function AllBlog() {
   if (loading) return <Loader />;
 
   return (
-    <div className="bg-gray-100 text-gray-800">
-     
-    <div className="px-5 lg:mx-20 py-8  bg-opacity-80 ">
-       <div className="text-center  hover:font-semibold transition-all duration-1000 ease-in shadow-lg rounded-lg bg-slate-200 mb-10">
-        <p className="text-3xl py-5 px-5 underline cursor-default  block"> Browse All Blogs</p></div>
-      {/* Blog Cards */}
-      {blogs.length === 0 ? (
-        <div className="text-center mt-10 text-xl">No Blogs Found</div>
-      ) : (
-        <div className="flex flex-wrap justify-between gap-6">
-          {blogs.map((blog) => (
-            <BlogCard key={blog._id} blog={blog} />
-          ))}
+    <div className="bg-gray-100 text-center text-gray-800">
+      <div className="px-5 text-center py-8  bg-opacity-80 ">
+       <h2 className="text-center text-4xl font-bold mb-8">Browse All Blogs</h2>
+        {/* Blog Cards */}
+        {blogs.length === 0 ? (
+          <div className="text-center mt-10 text-xl">No Blogs Found</div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-2 ">
+            {blogs.map((blog) => (
+              <BlogCard key={blog._id} blog={blog} />
+            ))}
+          </div>
+        )}
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center gap-4 mt-10">
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          <span className="text-lg font-semibold">
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+            className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
-      )}
-
-      {/* Pagination Controls */}
-      <div className="flex justify-center items-center gap-4 mt-10">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
-        >
-          Prev
-        </button>
-
-        <span className="text-lg font-semibold">
-          Page {page} of {totalPages}
-        </span>
-
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="px-4 py-2 text-white bg-blue-950 rounded hover:bg-blue-800 disabled:opacity-50"
-        >
-          Next
-        </button>
       </div>
-    </div>
     </div>
   );
 }
