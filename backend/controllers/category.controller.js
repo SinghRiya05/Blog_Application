@@ -4,7 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { Category } from "../models/category.model.js";
 
 export const createCategory = asyncHandler(async (req, res) => {
-  console.log("riya");
+  
   
   const { name, description } = req.body;
   if (!name || !description) {

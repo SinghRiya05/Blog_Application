@@ -134,7 +134,7 @@ export const deleteblog = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const blogid = req.params.id;
   const role = req.user.role;
-  console.log(req.user.role);
+  
 
   await Comment.deleteMany({blog:blogid});
   const blog = await Blog.findById(blogid);

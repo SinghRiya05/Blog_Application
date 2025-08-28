@@ -31,7 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
   if (!createdUser) {
     throw new ApiError(500, "Something went worng while registering the user");
   }
-  console.log("registered");
+ 
 
   return res
     .status(201)
@@ -53,7 +53,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
   const loggendInUser = await User.findById(user._id).select("-password");
   const token = jwt.sign(
-    { id: user._id, role: user.role },
+    { id: user._id, role: user.role ,name:user.username,email:user.email,image:user.image},
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
@@ -103,3 +103,12 @@ export const getAllUser=asyncHandler(
    }
   }
 )
+
+export const getMe=asyncHandler(
+  async(req,res)=>{
+     const user = await User.findById(req.user.id).select("-password");
+  res.json(user);
+  }
+)
+
+

@@ -4,6 +4,7 @@ import AllBlog from "./AllBlog";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Category from "./Category.jsx";
+import Last from "./Last.jsx";
 
 
 export default function Homepage() {
@@ -13,6 +14,7 @@ export default function Homepage() {
       <Hero />
       <AllBlog />
       <Category/>
+      <Last/>
       <Footer />
     </div>
   );

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../../api/axios';
-import CatCard from '../../components/CatCard';
+import React, { useEffect, useState } from "react";
+import axios from "../../api/axios";
+import CatCard from "../../components/CatCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Category() {
   const [categories, setCategories] = useState([]);
@@ -19,13 +20,54 @@ function Category() {
   }, []);
 
   return (
-    <div className="p-10 px-20">
-      <h2 className="text-4xl font-bold mb-10 text-center">All Categories</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-12">
-        {categories.map((cat) => (
-          <CatCard key={cat._id} cat={cat} />
-        ))}
-      </div>
+    <div className="px-6 py-12 md:px-20 bg-gray-50 ">
+      {/* Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-4xl font-bold mb-6 text-center text-gray-800"
+      >
+        Explore Categories
+      </motion.h2>
+      <p className="text-center text-gray-600 mb-12 text-lg">
+        Discover blogs across different topics and interests
+      </p>
+
+      {/* Categories Grid */}
+      {categories.length > 0 ? (
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-8"
+        >
+          <AnimatePresence>
+            {categories.map((cat, index) => (
+              <motion.div
+                key={cat._id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1, // staggered effect
+                }}
+                whileHover={{ scale: 1.05 }}
+                className="transform transition"
+              >
+                <CatCard cat={cat} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-gray-500 text-xl mt-10"
+        >
+          🚫 No categories available
+        </motion.div>
+      )}
     </div>
   );
 }

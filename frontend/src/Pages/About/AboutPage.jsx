@@ -48,7 +48,7 @@ export default function AboutPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="mt-10 px-8 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-lg hover:shadow-2xl transition-all"
-            onClick={()=>navigate("/home")}
+            onClick={()=>navigate("/")}
           >
             Get Started 🚀
           </motion.button>

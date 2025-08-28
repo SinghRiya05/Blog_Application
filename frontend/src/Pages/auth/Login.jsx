@@ -28,16 +28,10 @@ export default function Login({ setRole }) {
 
         const decoded = jwtDecode(token);
         const role = decoded.role;
-        console.log(role);
         setRole(role);
 
-        if (role === "admin") {
+        if (role === "admin" || role === "user") {
           navigate("/");
-        } else if (role === "user") {
-          
-
-          navigate("/");
-          console.log("singh");
         } else {
           setErrorMsg("Unknown user role.");
         }
@@ -46,67 +40,77 @@ export default function Login({ setRole }) {
       }
       toast.success("User Logged in successfully");
     } catch (error) {
-      console.log(error);
-
       setErrorMsg(error.response?.data?.message || "Login failed");
-      console.log(errorMsg);
-
       toast.error(errorMsg);
     }
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex justify-center items-center mt-16 mb-16">
-        <div className=" bg-gray-200 px-10 py-8 rounded-lg shadow-md w-full max-w-md hover:scale-105 transition-all duration-700 hover:shadow-md hover:bg-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+      {/* Background Gradient */}
+      <div className="flex-1  flex items-center justify-center bg-gradient-to-br from-blue-900 via-gray-900 to-black px-4">
+        {/* Glassmorphism Card */}
+        <div className="relative my-20 bg-white/10 backdrop-blur-lg border border-white/20 px-10 py-10 rounded-2xl shadow-2xl w-full max-w-md text-white transition-all duration-700 hover:scale-[1.02]">
+          <h2 className="text-3xl font-bold mb-8 text-center tracking-wide">
+            Welcome Back 👋
+          </h2>
+
           {errorMsg && (
-            <p className="text-red-500 mb-4 text-center">{errorMsg}</p>
+            <p className="text-red-400 mb-4 text-center">{errorMsg}</p>
           )}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Email
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
+                Email Address
               </label>
               <input
-                className="w-full p-2 border border-gray-400 rounded outline-none"
+                className="w-full p-3 rounded-xl bg-white/10 border border-gray-500 focus:border-blue-400 outline-none text-white placeholder-gray-300"
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                placeholder="Enter your email"
               />
             </div>
 
+            {/* Password */}
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium mb-1"
+                className="block text-sm font-medium mb-2"
               >
                 Password
               </label>
               <input
-                className="w-full p-2 border border-gray-400 rounded outline-none"
+                className="w-full p-3 rounded-xl bg-white/10 border border-gray-500 focus:border-blue-400 outline-none text-white placeholder-gray-300"
                 type="password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                placeholder="Enter your password"
               />
             </div>
 
+            {/* Button */}
             <button
               type="submit"
-              className="bg-blue-950 text-white py-2 rounded hover:bg-[#2e293d] transition duration-300"
+              className="mt-4 bg-white text-black py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg "
             >
               Login
             </button>
           </form>
-          <p className="mt-8 italic">
-            Don't have an account?{" "}
+
+          {/* Signup Redirect */}
+          <p className="mt-8 text-center text-gray-300">
+            Don’t have an account?{" "}
             <span
-              className="cursor-pointer font-bold"
+              className="cursor-pointer font-semibold text-blue-400 hover:text-blue-300 transition-all"
               onClick={() => navigate("/signup")}
             >
               Signup now
@@ -114,7 +118,7 @@ export default function Login({ setRole }) {
           </p>
         </div>
       </div>
-      <Footer />
+  
     </div>
   );
 }

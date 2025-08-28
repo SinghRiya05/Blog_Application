@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../api/axios";
 import deleteicon from "../../../assets/bin_icon.svg";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 export default function Bloglist() {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     try {
-      const res = axios.delete(`/blog/${id}`);
-      toast.success("Blog is deletd")
+      await axios.delete(`/blog/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      toast.success("Blog deleted successfully ✅");
       setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== id));
     } catch (error) {
-       toast.success("Blog deltetion failed")
-      console.log(error.message);
+      toast.error("Blog deletion failed ❌");
+      console.error(error.message);
     }
   };
 
@@ -23,11 +28,16 @@ export default function Bloglist() {
     const fetchAdminBlogs = async () => {
       try {
         const response = await axios.get(`/blog`, {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         });
         setBlogs(response.data.data);
       } catch (error) {
+        toast.error("Failed to fetch blogs ❌");
         console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -35,49 +45,72 @@ export default function Bloglist() {
   }, []);
 
   return (
-    <div className="w-full  p-4">
-      <h2 className="text-xl font-semibold mb-4">All Blogs</h2>
-      <table className="w-full border-collapse border bg-white">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Title</th>
-            <th className="border px-4 py-2">Date</th>
-            <th className="border px-4 py-2">Status</th>
-            <th className="border px-4 py-2">Delete</th>
-            <th className="border px-4 py-2">Update</th>
-          </tr>
-        </thead>
-        <tbody>
-          {blogs.map((blog) => (
-            <tr key={blog._id} className="text-center">
-              <td className="border px-4 py-2">{blog.title}</td>
-              <td className="border px-4 py-2">
-                {new Date(blog.createdAt).toLocaleDateString()}
-              </td>
-              <td className="border px-4 py-2">
-                {blog.isPublished ? "Published" : "unPublished"}
-              </td>
+    <div className="w-full p-4">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">All Blogs</h2>
 
-              <td className="border px-4 py-2 ">
-                <button
-                  onClick={() => handleDelete(blog._id)}
-                  className="cursor-pointer"
+      {loading ? (
+        <p className="text-center text-gray-500">Loading blogs...</p>
+      ) : blogs.length === 0 ? (
+        <p className="text-center text-gray-500">No blogs found</p>
+      ) : (
+        <div className="overflow-x-auto shadow-md rounded-xl">
+          <table className="w-full border-collapse bg-white rounded-xl overflow-hidden">
+            <thead>
+              <tr className="bg-blue-950 text-white">
+                <th className="px-6 py-3 text-left">Title</th>
+                <th className="px-6 py-3 text-left">Date</th>
+                <th className="px-6 py-3 text-left">Status</th>
+                <th className="px-6 py-3 text-center">Delete</th>
+                <th className="px-6 py-3 text-center">Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {blogs.map((blog, i) => (
+                <tr
+                  key={blog._id}
+                  className={`border-b hover:bg-blue-50 transition ${
+                    i % 2 === 0 ? "bg-gray-50" : "bg-white"
+                  }`}
                 >
-                  <img src={deleteicon} width={20} alt="" />
-                </button>
-              </td>
-              <td className="border px-4 py-2 ">
-                <button
-                  onClick={() => navigate(`/admin/editBlog/${blog._id}`)}
-                  className="cursor-pointer text-blue-800 underline hover:text-blue-400"
-                >
-                  Edit Blog
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className="px-6 py-3 font-medium text-gray-800">
+                    {blog.title}
+                  </td>
+                  <td className="px-6 py-3 text-gray-500">
+                    {new Date(blog.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td
+                    className={`px-6 py-3 font-semibold ${
+                      blog.isPublished ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {blog.isPublished ? "Published" : "Unpublished"}
+                  </td>
+                  <td className="px-6 py-3 text-center">
+                    <button
+                      onClick={() => handleDelete(blog._id)}
+                      className="p-2 rounded-full hover:bg-red-100 transition"
+                    >
+                      <img src={deleteicon} width={20} alt="delete" />
+                    </button>
+                  </td>
+                  <td className="px-6 py-3 text-center">
+                    <button
+                      onClick={() => navigate(`/admin/editBlog/${blog._id}`)}
+                      className="cursor-pointer text-blue-700 underline hover:text-blue-400"
+                    >
+                      Edit Blog
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
