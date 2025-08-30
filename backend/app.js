@@ -11,6 +11,7 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+  "https://blog-application-tau-steel.vercel.app/"
 ];
 
 app.use(cors({
