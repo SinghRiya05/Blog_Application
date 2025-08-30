@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/blog': {
-        target: 'http://localhost:8080', // ← Backend server ka address
+        target: 'https://blog-application-94u9.onrender.com', // ← Backend server ka address
         changeOrigin: true,
         secure: false,
       },

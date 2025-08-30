@@ -9,9 +9,17 @@ function Category() {
   const fetchCategories = async () => {
     try {
       const res = await axios.get("category/all");
-      setCategories(res.data.data);
+      console.log("API Response:", res.data);
+
+      // Safe handling: agar array direct mila to use le lo, warna nested data lo
+      const cats = Array.isArray(res.data)
+        ? res.data
+        : res.data?.data || [];
+
+      setCategories(cats);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching categories:", error);
+      setCategories([]); // fallback
     }
   };
 
@@ -38,12 +46,12 @@ function Category() {
       {categories.length > 0 ? (
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
         >
           <AnimatePresence>
             {categories.map((cat, index) => (
               <motion.div
-                key={cat._id}
+                key={cat._id || index} // fallback key
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
