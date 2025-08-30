@@ -6,9 +6,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/blog': {
-        target: 'https://blog-application-94u9.onrender.com', // ← Backend server ka address
+        target: 'https://blog-application-94u9.onrender.com',
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''), // "/api/blog/AllBlog" -> "/blog/AllBlog"
       },
     },
   },
