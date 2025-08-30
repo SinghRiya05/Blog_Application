@@ -11,21 +11,18 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://blog-application-3i3c.vercel.app", // apna actual domain dalna
 ];
 
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
-      cb(null, true);
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      cb(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true,
+  credentials: true, // important
 }));
-app.use("/uploads", express.static("uploads"));
-app.use(express.json({limit:"16kb"}))
 
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
 
