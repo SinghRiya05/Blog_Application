@@ -9,7 +9,7 @@ function Category() {
   const fetchCategories = async () => {
     try {
       const res = await axios.get("category/all");
-      console.log("API Response:", res.data);
+      
 
       // Safe handling: agar array direct mila to use le lo, warna nested data lo
       const cats = Array.isArray(res.data)
