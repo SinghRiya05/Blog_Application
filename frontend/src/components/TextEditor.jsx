@@ -5,12 +5,12 @@ import 'react-quill/dist/quill.snow.css';
 
 export default function TextEditor({ value, onChange }) {
   return (
-    <div className="bg-white border rounded-md shadow-sm">
+    <div className="bg-whit border  rounded-md ">
       <ReactQuill
         theme="snow"
         value={value}
         onChange={onChange}
-        className="min-h-[200px]"
+        className="min-h-[400px]"
         placeholder="Write your blog content here..."
         modules={TextEditor.modules}
         formats={TextEditor.formats}

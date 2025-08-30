@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <div className="relative h-[38rem] overflow-hidden flex items-center justify-center text-center px-4 sm:px-8">
+    <div className="relative h-[40rem] overflow-hidden flex items-center justify-center text-center px-4 sm:px-8">
 
       {/* Background Image with Slow Zoom Animation */}
       <motion.img
@@ -26,7 +26,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl  font-semibold leading-relaxed lg:leading-relaxed"
+          className="text-3xl sm:text-4xl  font-semibold leading-relaxed lg:leading-relaxed"
         >
           BlogSpace: Where Every Thought Finds a Voice <br />
           Write Freely, Learn Deeply, Connect Globally

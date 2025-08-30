@@ -3,6 +3,7 @@ import axios from "../../../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader";
+import TextEditor from "../../../components/TextEditor";
 
 export default function UserAddBlog() {
   const [categories, setCategories] = useState([]);
@@ -130,18 +131,16 @@ export default function UserAddBlog() {
         </div>
 
         {/* Description */}
-        <div>
-          <label className="block text-gray-700 font-semibold mb-2">
-            Blog Description
-          </label>
-          <textarea
-            rows="12"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Write your blog content here..."
-            className="w-full border border-gray-300 rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-          ></textarea>
-        </div>
+       <div >
+            <label className="block text-gray-700 font-semibold mb-1">Blog Description</label>
+            <div className="">            <TextEditor
+              value={description}
+              onChange={setDescription}
+             
+            />
+            </div>
+
+          </div>
 
         {/* Category */}
         <div>

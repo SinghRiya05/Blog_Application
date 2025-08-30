@@ -66,8 +66,9 @@ export default function UserBloglist() {
   }
 
   return (
-    <div className="w-full p-6 overflow-x-auto">
-      <div className="shadow-lg rounded-lg overflow-hidden">
+    <div className="w-full p-6">
+      {/* Desktop Table */}
+      <div className="hidden md:block shadow-lg rounded-lg overflow-hidden">
         <table className="w-full border-collapse bg-white rounded-lg">
           <thead>
             <tr className="bg-gradient-to-r from-blue-800 to-blue-600 text-white text-left">
@@ -86,17 +87,12 @@ export default function UserBloglist() {
                   index % 2 === 0 ? "bg-gray-50/40" : "bg-white"
                 } hover:bg-gray-100 transition`}
               >
-                {/* Title */}
                 <td className="px-6 py-3 font-medium text-gray-800">
                   {blog.title}
                 </td>
-
-                {/* Date */}
                 <td className="px-6 py-3 text-gray-600">
                   {new Date(blog.createdAt).toLocaleDateString()}
                 </td>
-
-                {/* Status */}
                 <td className="px-6 py-3 text-center">
                   <span
                     className={`px-3 py-1 text-sm rounded-full ${
@@ -108,8 +104,6 @@ export default function UserBloglist() {
                     {blog.status || "Published"}
                   </span>
                 </td>
-
-                {/* Delete */}
                 <td className="px-6 py-3 text-center">
                   <button
                     onClick={() => handleDelete(blog._id)}
@@ -118,8 +112,6 @@ export default function UserBloglist() {
                     <img src={deleteicon} width={20} alt="delete" />
                   </button>
                 </td>
-
-                {/* Edit */}
                 <td className="px-6 py-3 text-center">
                   <button
                     onClick={() => navigate(`/user/editBlog/${blog.slug}`)}
@@ -132,6 +124,49 @@ export default function UserBloglist() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {blogs.map((blog) => (
+          <div
+            key={blog._id}
+            className="bg-white rounded-lg shadow p-2 border space-y-4 border-gray-200"
+          >
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              {blog.title}
+            </h3>
+            <p className="text-sm text-gray-500 mb-1">
+              📅 {new Date(blog.createdAt).toLocaleDateString()}
+            </p>
+            <p className="mb-3">
+              <span
+                className={`px-2 py-1 text-xs rounded-full ${
+                  blog.status === "Draft"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : "bg-green-100 text-green-700"
+                }`}
+              >
+                {blog.status || "Published"}
+              </span>
+            </p>
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => handleDelete(blog._id)}
+                className="flex items-center gap- text-red-600 hover:text-red-400 text-sm"
+              >
+                <img src={deleteicon} width={16} alt="delete" />
+                Delete
+              </button>
+              <button
+                onClick={() => navigate(`/user/editBlog/${blog.slug}`)}
+                className="text-blue-600 hover:text-blue-400 mt-5 text-sm font-medium"
+              >
+                ✏️ Edit
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

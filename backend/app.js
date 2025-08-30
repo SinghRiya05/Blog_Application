@@ -9,7 +9,7 @@ import categoryRouter from "./routes/category.routes.js"
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"http://localhost:5174",
     credentials:true
 }))
 app.use("/uploads", express.static("uploads"));

@@ -82,7 +82,7 @@ export default function UserDashboard() {
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 text-center mb-8">
           ✍️ Recent Blogs
         </h2>
-        <div className="bg-white shadow-md rounded-2xl p-6">
+        <div className="bg-white shadow-md rounded-2xl md:p-6">
           <UserBloglist />
         </div>
       </div>
