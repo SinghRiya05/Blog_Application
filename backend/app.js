@@ -25,7 +25,9 @@ app.use(cors({
   credentials: true, // important
 }));
 
-app.use(express.urlencoded({extended:true,limit:"16kb"}))
+app.use(express.json({ limit: "16kb" })); // JSON body parse ke liye
+app.use(express.urlencoded({ extended: true, limit: "16kb" })); // form data ke liye
+
 
 app.use(express.static("public"))
 

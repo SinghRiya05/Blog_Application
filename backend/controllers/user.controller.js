@@ -39,6 +39,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
+  console.log("riya");
+  
   const { email, password } = req.body;
   if (!email) {
     throw new ApiError(400, " email is required");

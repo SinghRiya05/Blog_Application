@@ -4,7 +4,7 @@ import axios from "../../api/axios";
 import { jwtDecode } from "jwt-decode";
 import Navbar from "../../components/Navbar/Navbar";
 import { toast } from "react-toastify";
-import Footer from "../../components/Footer/Footer";
+
 
 export default function Login({ setRole }) {
   const navigate = useNavigate();
