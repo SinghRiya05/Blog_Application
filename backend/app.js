@@ -11,7 +11,7 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://blog-application-3i3c.vercel.app/", // apna actual domain dalna
+  "https://blog-application-3i3c.vercel.app", // apna actual domain dalna
 ];
 
 app.use(cors({
